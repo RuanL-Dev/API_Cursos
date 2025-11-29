@@ -1,0 +1,58 @@
+### Builds / compilados ###
+HELP.md
+target/
+build/
+out/
+*.class
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+.application.properties
+
+### Dependências locais ###
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+.idea/
+.vscode/
+.project
+.classpath
+.settings/
+
+### SO / Diversos ###
+.DS_Store
+Thumbs.db
+*.log
+
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### Spring Boot configs locais ###
+application.properties
+src/main/resources/application.properties
+src/main/resources/application*.properties
+src/main/resources/application*.yml
+EOF
