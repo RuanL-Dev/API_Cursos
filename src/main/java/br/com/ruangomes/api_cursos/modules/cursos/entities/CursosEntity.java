@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -41,8 +42,18 @@ public class CursosEntity {
     @NotBlank(message = "O campo [category] é obrigatório.")
     private String category;
 
-    
-    private Boolean active;
+    @NotBlank(message = "O campo [professor] é obrigatório.")
+    private String professor;
+
+    @Builder.Default
+    private Boolean active = true;
+
+    @PrePersist
+    public void prePersist() {
+        if (active == null) {
+            active = true;
+        }
+    }
 
     @CreationTimestamp
     private LocalDateTime created_at;
