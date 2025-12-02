@@ -18,7 +18,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.AuthCursoDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.AuthCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
-import jakarta.security.auth.message.AuthException;
 
 @Service
 public class AuthCursoUseCase {
@@ -50,7 +49,7 @@ public class AuthCursoUseCase {
         var token = JWT.create().withIssuer("cursos")
         .withSubject(curso.getId().toString())
         .withExpiresAt(expires_in)
-        .withClaim("roles", Arrays.asList("Curso"))
+        .withClaim("roles", Arrays.asList("CURSO"))
         .sign(algorithm);
 
         var authCursoResponseDTO = AuthCursoResponseDTO.builder()
@@ -58,5 +57,5 @@ public class AuthCursoUseCase {
         .expires_in(expires_in.toEpochMilli())
         .build();
         return authCursoResponseDTO;
-    
+    }
 }
