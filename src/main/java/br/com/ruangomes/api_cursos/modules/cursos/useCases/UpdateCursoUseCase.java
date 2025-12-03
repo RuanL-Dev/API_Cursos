@@ -22,7 +22,6 @@ public class UpdateCursoUseCase {
                 .orElseThrow(() -> {
                     throw new NoContentException();
                 });
-        System.out.println(curso);
 
         boolean dataUpdated = false;
 
