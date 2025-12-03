@@ -17,7 +17,7 @@ public class JWTCursoProvider {
     private String secretKey;
 
     public DecodedJWT validateToken(String token) {
-        token = token.replace("Bearer", "");
+        token = token.replace("Bearer ", "");
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
