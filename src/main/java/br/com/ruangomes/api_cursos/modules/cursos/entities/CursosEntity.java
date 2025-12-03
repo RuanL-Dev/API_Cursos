@@ -13,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +30,6 @@ public class CursosEntity {
     private UUID id;
 
     @NotBlank(message = "O campo [name] é obrigatório.")
-    @Pattern(regexp = "^[^\\s]+$", message = "O campo [name] não deve conter espaços em branco.")
     private String name;
 
     @NotBlank(message = "O campo [category] é obrigatório.")

@@ -24,7 +24,7 @@ public class CreateCursoUseCase {
 
 
     public ProfileCursoResponseDTO execute(CursosEntity cursosEntity) {
-        this.cursoRepository.findByName(cursosEntity.getName())
+        this.cursoRepository.findByNameIgnoreCase(cursosEntity.getName())
         .ifPresent((user) -> {
             throw new CursoFoundException();
         });

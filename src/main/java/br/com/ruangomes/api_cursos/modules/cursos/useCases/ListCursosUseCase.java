@@ -13,8 +13,21 @@ public class ListCursosUseCase {
     @Autowired
     private CursoRepository cursoRepository;
 
-    public List<ProfileCursoResponseDTO> execute() {
-        var result = this.cursoRepository.findAll();
+    public List<ProfileCursoResponseDTO> execute(String name, String category) {
+
+        String nameFilter = null;
+        String categoryFilter = null;
+
+        if(name != null && !name.isBlank()) {
+            nameFilter = "%" + name.toLowerCase() + "%";
+        }
+
+        if(category != null && !category.isBlank()) {
+            categoryFilter = category.toLowerCase();
+        }
+
+        var result = this.cursoRepository.findByFilters(nameFilter, categoryFilter);
+
         if (result.isEmpty()) {
             throw new NoContentException();
         }

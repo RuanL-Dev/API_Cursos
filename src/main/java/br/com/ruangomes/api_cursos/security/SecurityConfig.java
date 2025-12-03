@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
     @Autowired
-    private SecurityFilter securityCursoFilter;
+    private SecurityFilter securityFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -25,7 +25,7 @@ public class SecurityConfig {
             .requestMatchers("/professor/auth").permitAll();
             auth.anyRequest().authenticated();
             
-        }).addFilterBefore(securityCursoFilter, BasicAuthenticationFilter.class);
+        }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
         return http.build();
     }
 

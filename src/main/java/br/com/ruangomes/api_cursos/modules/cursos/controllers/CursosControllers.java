@@ -1,15 +1,13 @@
 package br.com.ruangomes.api_cursos.modules.cursos.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.CreateCursoUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.ListCursosUseCase;
-import br.com.ruangomes.api_cursos.modules.cursos.useCases.ProfileCursoUseCase;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,9 +23,6 @@ public class CursosControllers {
 
     @Autowired
     private CreateCursoUseCase createCursoUseCase;
-
-    @Autowired
-    private ProfileCursoUseCase profileCursoUseCase;
 
     @Autowired
     private ListCursosUseCase listCursosUseCase;
@@ -46,11 +41,16 @@ public class CursosControllers {
         
     }    
 
-    @GetMapping("/cursos/")
+    @GetMapping("/cursos")
     @PreAuthorize("hasRole('PROFESSOR')")
-    public ResponseEntity<List<ProfileCursoResponseDTO>> listarCursos() {
-        var result = this.listCursosUseCase.execute();
+    public ResponseEntity<List<ProfileCursoResponseDTO>> listarCursos(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String category
+    ) {
+        var result = this.listCursosUseCase.execute(name, category);
         return ResponseEntity.ok().body(result);
+
+        
     }
     
     
