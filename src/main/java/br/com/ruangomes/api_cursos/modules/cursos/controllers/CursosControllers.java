@@ -9,6 +9,7 @@ import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.CreateCursoUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.DeleteCursoUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.ListCursosUseCase;
+import br.com.ruangomes.api_cursos.modules.cursos.useCases.PatchCursosUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.UpdateCursoUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
@@ -37,6 +39,8 @@ public class CursosControllers {
     private final UpdateCursoUseCase updateCursoUseCase;
 
     private final DeleteCursoUseCase deleteCursoUseCase;
+
+    private final PatchCursosUseCase patchCursosUseCase;
 
     @PostMapping("/cursos")
     @PreAuthorize("hasRole('PROFESSOR')")
@@ -78,6 +82,16 @@ public class CursosControllers {
     public ResponseEntity<Object> deleteCurso(@PathVariable UUID id) {
             this.deleteCursoUseCase.deleteExecute(id);
             return ResponseEntity.noContent().build(); 
+    }
+
+    @PatchMapping("/cursos/{id}/active")
+    public ResponseEntity<Object> patchCurso(@PathVariable UUID id) {
+        try {
+            this.patchCursosUseCase.patchExecute(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }
