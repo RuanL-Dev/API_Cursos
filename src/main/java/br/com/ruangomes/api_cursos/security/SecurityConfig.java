@@ -15,15 +15,16 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
     @Autowired
-    private SecurityCursoFilter securityCursoFilter;
+    private SecurityFilter securityCursoFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/cursos/").permitAll()
-            .requestMatchers("/cursos/auth").permitAll();
+            auth.requestMatchers("/professor/").permitAll()
+            .requestMatchers("/professor/auth").permitAll();
             auth.anyRequest().authenticated();
+            
         }).addFilterBefore(securityCursoFilter, BasicAuthenticationFilter.class);
         return http.build();
     }
