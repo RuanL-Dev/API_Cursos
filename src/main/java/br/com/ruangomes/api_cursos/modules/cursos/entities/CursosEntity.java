@@ -1,17 +1,16 @@
 package br.com.ruangomes.api_cursos.modules.cursos.entities;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
-
+import br.com.ruangomes.api_cursos.modules.professor.entities.ProfessorEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -35,15 +34,12 @@ public class CursosEntity {
     @Pattern(regexp = "^[^\\s]+$", message = "O campo [name] não deve conter espaços em branco.")
     private String name;
 
-    @NotBlank(message = "O campo [password] é obrigatório.")
-    @Length(min = 10, max = 100, message = "O campo [password] deve ter entre (10) e (100) caracteres.")
-    private String password;
-
     @NotBlank(message = "O campo [category] é obrigatório.")
     private String category;
 
-    @NotBlank(message = "O campo [professor] é obrigatório.")
-    private String professor;
+    @ManyToOne
+    @JoinColumn(name = "professores_id", nullable = false)
+    private ProfessorEntity professor;
 
     @Builder.Default
     private Boolean active = true;
