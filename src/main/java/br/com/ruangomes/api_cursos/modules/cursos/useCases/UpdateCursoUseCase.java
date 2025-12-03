@@ -1,22 +1,20 @@
 package br.com.ruangomes.api_cursos.modules.cursos.useCases;
 
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import br.com.ruangomes.api_cursos.exceptions.NoContentException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.UpdateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import br.com.ruangomes.api_cursos.modules.professor.repositories.ProfessorRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UpdateCursoUseCase {
 
-    @Autowired
-    private CursoRepository cursoRepository;
-
-    @Autowired
-    private ProfessorRepository professorRepository;
+    private final CursoRepository cursoRepository;
+    private final ProfessorRepository professorRepository;
 
     public UpdateCursoRequestDTO updateExecute(UUID id, UpdateCursoRequestDTO data) {
 
