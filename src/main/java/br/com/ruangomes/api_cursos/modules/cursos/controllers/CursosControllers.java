@@ -76,12 +76,8 @@ public class CursosControllers {
 
     @DeleteMapping("/cursos/{id}")
     public ResponseEntity<Object> deleteCurso(@PathVariable UUID id) {
-        try {
             this.deleteCursoUseCase.deleteExecute(id);
-            return ResponseEntity.ok().body("Curso deletado com sucesso");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+            return ResponseEntity.noContent().build(); 
     }
 
 }
