@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class ProfessorEntity {
     private UUID id;
 
     @NotBlank(message = "O campo [nomeProfessor] é obrigatório.")
+    @Pattern(regexp = "^[^\\s]+$", message = "O campo [nomeProfessor] não deve conter espaços em branco.")
     private String nomeProfessor;
 
     @NotBlank(message = "O campo [password] é obrigatório.")
