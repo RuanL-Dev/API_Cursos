@@ -10,10 +10,9 @@ import br.com.ruangomes.api_cursos.modules.cursos.useCases.CreateCursoUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.ListCursosUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.UpdateCursoUseCase;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,16 +23,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/professor/")
+@RequiredArgsConstructor
 public class CursosControllers {
 
-    @Autowired
-    private CreateCursoUseCase createCursoUseCase;
+    private final CreateCursoUseCase createCursoUseCase;
 
-    @Autowired
-    private ListCursosUseCase listCursosUseCase;
 
-    @Autowired
-    private UpdateCursoUseCase updateCursoUseCase;
+    private final ListCursosUseCase listCursosUseCase;
+
+
+    private final UpdateCursoUseCase updateCursoUseCase;
 
     @PostMapping("/cursos")
     @PreAuthorize("hasRole('PROFESSOR')")
