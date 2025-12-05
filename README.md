@@ -32,7 +32,7 @@ Here are the technologies used in this project.
 * Swagger - API Documentation
 * Git - Version Control System
 
-## Java Gems
+## Java libs used in the project:
 
 * bcrypt
 * spring-boot-starter-data-jpa
