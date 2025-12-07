@@ -7,24 +7,26 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import br.com.ruangomes.api_cursos.exceptions.CursoFoundException;
+import br.com.ruangomes.api_cursos.modules.cursos.dto.CreateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import br.com.ruangomes.api_cursos.modules.professor.entities.ProfessorEntity;
 import br.com.ruangomes.api_cursos.modules.professor.repositories.ProfessorRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CreateCursoUseCase {
     
-    @Autowired
-    private CursoRepository cursoRepository;
 
-    @Autowired
-    private ProfessorRepository professorRepository;
+    private final CursoRepository cursoRepository;
+
+    private final ProfessorRepository professorRepository;
 
 
-    public ProfileCursoResponseDTO execute(CursosEntity cursosEntity) {
-        this.cursoRepository.findByNameIgnoreCase(cursosEntity.getName())
+    public ProfileCursoResponseDTO execute(CreateCursoRequestDTO createCursoRequestDTO) {
+        this.cursoRepository.findByNameIgnoreCase(createCursoRequestDTO.getName())
         .ifPresent((user) -> {
             throw new CursoFoundException();
         });
@@ -45,9 +47,13 @@ public class CreateCursoUseCase {
             throw new RuntimeException("Professor not found");
         });
 
-        cursosEntity.setProfessor(professor);
+        var cursoBuilder = CursosEntity.builder()
+        .name(createCursoRequestDTO.getName())
+        .category(createCursoRequestDTO.getCategory())
+        .professor(professor)
+        .build();
 
-        var saved = this.cursoRepository.save(cursosEntity);
+        var saved = this.cursoRepository.save(cursoBuilder);
 
         var cursoDTO = ProfileCursoResponseDTO.builder()
         .name(saved.getName())
