@@ -28,10 +28,6 @@ public class ListCursosUseCase {
 
         var result = this.cursoRepository.findByFilters(nameFilter, categoryFilter);
 
-        if (result.isEmpty()) {
-            throw new NoContentException();
-        }
-
         var cursoDTO = result.stream().map(curso -> ProfileCursoResponseDTO.builder()
                 .name(curso.getName())
                 .category(curso.getCategory())
