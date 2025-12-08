@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,7 @@ public class CursosControllers {
     @PostMapping("/cursos")
     @PreAuthorize("hasRole('PROFESSOR')")
     @Operation(summary = "Criar um novo curso", description = "Endpoint para criação de um novo curso. Requer autenticação de professor.")
+    @SecurityRequirement(name = "jwt_auth")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = CreateCursoRequestDTO.class))
@@ -75,6 +77,7 @@ public class CursosControllers {
     @GetMapping("/cursos")
     @PreAuthorize("hasRole('PROFESSOR')")
     @Operation(summary = "Listar cursos", description = "Endpoint para listar cursos com filtros opcionais. Requer autenticação de professor.")
+    @SecurityRequirement(name = "jwt_auth")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
                     @Content(array = @ArraySchema(schema = @Schema(implementation = ProfileCursoResponseDTO.class)))
@@ -93,6 +96,7 @@ public class CursosControllers {
     }
 
     @PutMapping("/cursos/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @Operation(summary = "Atualizar curso", description = "Endpoint para atualizar um curso existente.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
@@ -102,6 +106,7 @@ public class CursosControllers {
             @ApiResponse(responseCode = "400", description = "Professor não encontrado"),
             @ApiResponse(responseCode = "400", description = "Nenhum dado fornecido para atualização")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> updateCurso(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateCursoRequestDTO body) {
@@ -115,22 +120,26 @@ public class CursosControllers {
     }
 
     @DeleteMapping("/cursos/{id}")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @Operation(summary = "Deletar curso", description = "Endpoint para deletar um curso existente.")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Curso deletado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Curso não encontrado.")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> deleteCurso(@PathVariable UUID id) {
         this.deleteCursoUseCase.deleteExecute(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/cursos/{id}/active")
+    @PreAuthorize("hasRole('PROFESSOR')")
     @Operation(summary = "Ativar/Desativar curso", description = "Endpoint para ativar ou desativar um curso existente.")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Curso atualizado com sucesso"),
             @ApiResponse(responseCode = "404", description = "No content available/registered")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> patchCurso(@PathVariable UUID id) {
         try {
             this.patchCursosUseCase.patchExecute(id);

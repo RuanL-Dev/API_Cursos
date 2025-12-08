@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ public class AuthProfessorController {
             }, description = "Autenticação bem-sucedida"),
             @ApiResponse(responseCode = "401", description = "Professor/password incorrect")
     })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> create(@RequestBody AuthProfessorDTO authProfessorDTO) {
         try {
             var result = this.authProfessorUseCase.execute(authProfessorDTO);
