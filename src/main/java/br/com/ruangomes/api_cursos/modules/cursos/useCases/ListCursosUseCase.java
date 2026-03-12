@@ -3,7 +3,6 @@ package br.com.ruangomes.api_cursos.modules.cursos.useCases;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import br.com.ruangomes.api_cursos.exceptions.NoContentException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 
@@ -18,11 +17,11 @@ public class ListCursosUseCase {
         String nameFilter = null;
         String categoryFilter = null;
 
-        if(name != null && !name.isBlank()) {
+        if (name != null && !name.isBlank()) {
             nameFilter = "%" + name.toLowerCase() + "%";
         }
 
-        if(category != null && !category.isBlank()) {
+        if (category != null && !category.isBlank()) {
             categoryFilter = category.toLowerCase();
         }
 
