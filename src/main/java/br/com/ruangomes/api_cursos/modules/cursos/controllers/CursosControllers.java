@@ -60,17 +60,12 @@ public class CursosControllers {
                     @Content(schema = @Schema(implementation = CreateCursoRequestDTO.class))
             }, description = "Curso criado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Nome de curso já cadastrado"),
-            @ApiResponse(responseCode = "400", description = "Professor not found"),
+            @ApiResponse(responseCode = "404", description = "Professor not found"),
             @ApiResponse(responseCode = "401", description = "Não autorizado - Token inválido ou ausente")
     })
     public ResponseEntity<Object> create(@Valid @RequestBody CreateCursoRequestDTO createCursoRequestDTO) {
-        try {
-            var result = this.createCursoUseCase.execute(createCursoRequestDTO);
-            return ResponseEntity.ok().body(result);
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        var result = this.createCursoUseCase.execute(createCursoRequestDTO);
+        return ResponseEntity.ok().body(result);
 
     }
 
@@ -102,7 +97,7 @@ public class CursosControllers {
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = UpdateCursoRequestDTO.class))
             }, description = "Curso atualizado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "No content available/registered"),
+            @ApiResponse(responseCode = "204", description = "No content available/registered"),
             @ApiResponse(responseCode = "400", description = "Professor não encontrado"),
             @ApiResponse(responseCode = "400", description = "Nenhum dado fornecido para atualização")
     })
@@ -110,13 +105,8 @@ public class CursosControllers {
     public ResponseEntity<Object> updateCurso(
             @PathVariable UUID id,
             @Valid @RequestBody UpdateCursoRequestDTO body) {
-        try {
-            var result = this.updateCursoUseCase.updateExecute(id, body);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
+        var result = this.updateCursoUseCase.updateExecute(id, body);
+        return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/cursos/{id}")
@@ -141,12 +131,8 @@ public class CursosControllers {
     })
     @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> patchCurso(@PathVariable UUID id) {
-        try {
-            this.patchCursosUseCase.patchExecute(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        this.patchCursosUseCase.patchExecute(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
