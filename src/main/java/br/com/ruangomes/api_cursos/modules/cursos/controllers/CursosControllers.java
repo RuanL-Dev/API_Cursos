@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.CreateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.UpdateCursoRequestDTO;
-import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.CreateCursoUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.DeleteCursoUseCase;
 import br.com.ruangomes.api_cursos.modules.cursos.useCases.ListCursosUseCase;
@@ -59,7 +58,7 @@ public class CursosControllers {
             @ApiResponse(responseCode = "200", content = {
                     @Content(schema = @Schema(implementation = CreateCursoRequestDTO.class))
             }, description = "Curso criado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Nome de curso já cadastrado"),
+            @ApiResponse(responseCode = "422", description = "Nome de curso já cadastrado"),
             @ApiResponse(responseCode = "404", description = "Professor not found"),
             @ApiResponse(responseCode = "401", description = "Não autorizado - Token inválido ou ausente")
     })
@@ -98,7 +97,7 @@ public class CursosControllers {
                     @Content(schema = @Schema(implementation = UpdateCursoRequestDTO.class))
             }, description = "Curso atualizado com sucesso"),
             @ApiResponse(responseCode = "204", description = "No content available/registered"),
-            @ApiResponse(responseCode = "400", description = "Professor não encontrado"),
+            @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
             @ApiResponse(responseCode = "400", description = "Nenhum dado fornecido para atualização")
     })
     @SecurityRequirement(name = "jwt_auth")
