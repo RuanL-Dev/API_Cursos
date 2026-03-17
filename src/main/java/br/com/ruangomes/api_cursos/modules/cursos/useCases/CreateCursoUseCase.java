@@ -4,6 +4,7 @@ import java.util.UUID;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import br.com.ruangomes.api_cursos.exceptions.CursoFoundException;
+import br.com.ruangomes.api_cursos.exceptions.ProfessorNotFoundException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.CreateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
@@ -38,7 +39,7 @@ public class CreateCursoUseCase {
 
         ProfessorEntity professor = professorRepository.findById(professorId)
                 .orElseThrow(() -> {
-                    throw new RuntimeException("Professor not found");
+                    throw new ProfessorNotFoundException();
                 });
 
         var cursoBuilder = CursosEntity.builder()

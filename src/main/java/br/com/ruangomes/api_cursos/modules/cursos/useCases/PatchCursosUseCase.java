@@ -17,9 +17,9 @@ public class PatchCursosUseCase {
     public ProfileCursoResponseDTOBuilder patchExecute(UUID id) {
 
         var curso = this.cursoRepository.findById(id)
-        .orElseThrow(() -> {
-            throw new NoContentException();
-        });
+                .orElseThrow(() -> {
+                    throw new NoContentException();
+                });
 
         Boolean currentStatus = Boolean.TRUE.equals(curso.getActive());
         curso.setActive(!currentStatus);
@@ -27,11 +27,11 @@ public class PatchCursosUseCase {
         var pacthedCurso = this.cursoRepository.save(curso);
 
         return ProfileCursoResponseDTO.builder()
-        .name(pacthedCurso.getName())
-        .category(pacthedCurso.getCategory())
-        .professor(pacthedCurso.getProfessor().getNomeProfessor())
-        .active(pacthedCurso.getActive())
-        .id(pacthedCurso.getId());
+                .name(pacthedCurso.getName())
+                .category(pacthedCurso.getCategory())
+                .professor(pacthedCurso.getProfessor().getNomeProfessor())
+                .active(pacthedCurso.getActive())
+                .id(pacthedCurso.getId());
     }
-    
+
 }
