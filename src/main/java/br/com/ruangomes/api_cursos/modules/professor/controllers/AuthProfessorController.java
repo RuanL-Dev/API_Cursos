@@ -38,7 +38,7 @@ public class AuthProfessorController {
             var result = this.authProfessorUseCase.execute(authProfessorDTO);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 

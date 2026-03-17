@@ -4,6 +4,7 @@ import br.com.ruangomes.api_cursos.modules.professor.entities.ProfessorEntity;
 import br.com.ruangomes.api_cursos.modules.professor.repositories.ProfessorRepository;
 import br.com.ruangomes.api_cursos.utils.TestUtils;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,8 @@ public class CreateProfessorControllerTest {
 
     @BeforeEach
     public void setup() {
+
+        professorRepository.deleteAll();
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
@@ -77,4 +80,12 @@ public class CreateProfessorControllerTest {
                 .content(TestUtils.objectToJson(professorEntityTest)))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
+
+    @AfterEach
+    public void tearDown() {
+
+        professorRepository.deleteAll();
+
+    }
+
 }
