@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import br.com.ruangomes.api_cursos.exceptions.CursoFoundException;
+import br.com.ruangomes.api_cursos.exceptions.InvalidTokenException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.CreateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
@@ -86,8 +87,8 @@ public class CreateCursoUseCaseTest {
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
                 Assertions.assertThatThrownBy(() -> createCursoUseCase.execute(request))
-                                .isInstanceOf(RuntimeException.class)
-                                .hasMessageContaining("Token inválido: subject não é um UUID");
+                                .isInstanceOf(InvalidTokenException.class)
+                                .hasMessageContaining("Não autorizado - Token inválido ou ausente");
 
                 verify(professorRepository, never()).findById(any(UUID.class));
 

@@ -4,6 +4,7 @@ import java.util.UUID;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import br.com.ruangomes.api_cursos.exceptions.CursoFoundException;
+import br.com.ruangomes.api_cursos.exceptions.InvalidTokenException;
 import br.com.ruangomes.api_cursos.exceptions.ProfessorNotFoundException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.CreateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
@@ -34,7 +35,7 @@ public class CreateCursoUseCase {
         try {
             professorId = UUID.fromString(subject);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Token inválido: subject não é um UUID");
+            throw new InvalidTokenException();
         }
 
         ProfessorEntity professor = professorRepository.findById(professorId)

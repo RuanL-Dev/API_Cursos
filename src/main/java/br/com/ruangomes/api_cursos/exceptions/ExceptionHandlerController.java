@@ -68,4 +68,9 @@ public class ExceptionHandlerController {
     public ResponseEntity<String> handleNoContentException(NoContentException e) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
     }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<String> handleInvalidTokenException(InvalidTokenException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
 }
