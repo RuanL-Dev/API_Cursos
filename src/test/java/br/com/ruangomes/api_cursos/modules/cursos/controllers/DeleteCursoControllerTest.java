@@ -1,7 +1,5 @@
 package br.com.ruangomes.api_cursos.modules.cursos.controllers;
 
-import java.util.UUID;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.MediaType;
+
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -74,6 +72,25 @@ public class DeleteCursoControllerTest {
                 .header("Authorization", TestUtils.generateToken(professorEntityTest.getId(), secret)))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
+    }
+
+    @Test
+    @DisplayName("Should return Course not found when trying to delete a non-existent curso")
+    public void shouldReturnCourseNotFoundWhenDeletingNonExistentCurso() throws Exception {
+
+        var professorEntityTest = ProfessorEntity.builder()
+                .nomeProfessor("ProfessorTest")
+                .password("SenhaForte123!")
+                .build();
+
+        professorRepository.saveAndFlush(professorEntityTest);
+
+        var nonExistentId = "00000000-0000-0000-0000-000000000000";
+
+        mvc.perform(MockMvcRequestBuilders.delete("/professor/cursos/{id}", nonExistentId)
+                .header("Authorization", TestUtils.generateToken(professorEntityTest.getId(), secret)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().string("No content available/registered"));
     }
 
     @AfterEach

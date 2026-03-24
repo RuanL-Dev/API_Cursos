@@ -40,98 +40,98 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Tag(name = "Cursos", description = "Endpoints para gerenciamento de cursos")
 public class CursosControllers {
 
-    private final CreateCursoUseCase createCursoUseCase;
+        private final CreateCursoUseCase createCursoUseCase;
 
-    private final ListCursosUseCase listCursosUseCase;
+        private final ListCursosUseCase listCursosUseCase;
 
-    private final UpdateCursoUseCase updateCursoUseCase;
+        private final UpdateCursoUseCase updateCursoUseCase;
 
-    private final DeleteCursoUseCase deleteCursoUseCase;
+        private final DeleteCursoUseCase deleteCursoUseCase;
 
-    private final PatchCursosUseCase patchCursosUseCase;
+        private final PatchCursosUseCase patchCursosUseCase;
 
-    @PostMapping("/cursos")
-    @PreAuthorize("hasRole('PROFESSOR')")
-    @Operation(summary = "Criar um novo curso", description = "Endpoint para criação de um novo curso. Requer autenticação de professor.")
-    @SecurityRequirement(name = "jwt_auth")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = CreateCursoRequestDTO.class))
-            }, description = "Curso criado com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Nome de curso já cadastrado"),
-            @ApiResponse(responseCode = "404", description = "Professor not found"),
-            @ApiResponse(responseCode = "401", description = "Não autorizado - Token inválido ou ausente")
-    })
-    public ResponseEntity<Object> create(@Valid @RequestBody CreateCursoRequestDTO createCursoRequestDTO) {
-        var result = this.createCursoUseCase.execute(createCursoRequestDTO);
-        return ResponseEntity.ok().body(result);
+        @PostMapping("/cursos")
+        @PreAuthorize("hasRole('PROFESSOR')")
+        @Operation(summary = "Criar um novo curso", description = "Endpoint para criação de um novo curso. Requer autenticação de professor.")
+        @SecurityRequirement(name = "jwt_auth")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", content = {
+                                        @Content(schema = @Schema(implementation = CreateCursoRequestDTO.class))
+                        }, description = "Curso criado com sucesso"),
+                        @ApiResponse(responseCode = "422", description = "Nome de curso já cadastrado"),
+                        @ApiResponse(responseCode = "404", description = "Professor not found"),
+                        @ApiResponse(responseCode = "401", description = "Não autorizado - Token inválido ou ausente")
+        })
+        public ResponseEntity<Object> create(@Valid @RequestBody CreateCursoRequestDTO createCursoRequestDTO) {
+                var result = this.createCursoUseCase.execute(createCursoRequestDTO);
+                return ResponseEntity.ok().body(result);
 
-    }
-
-    @GetMapping("/cursos")
-    @PreAuthorize("hasRole('PROFESSOR')")
-    @Operation(summary = "Listar cursos", description = "Endpoint para listar cursos com filtros opcionais. Requer autenticação de professor.")
-    @SecurityRequirement(name = "jwt_auth")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(array = @ArraySchema(schema = @Schema(implementation = ProfileCursoResponseDTO.class)))
-            }, description = "Lista de cursos retornada com sucesso (pode ser vazia se não houver cursos cadastrados)"),
-            @ApiResponse(responseCode = "204", description = "Nenhum curso cadastrado", content = @Content),
-    })
-    public ResponseEntity<List<ProfileCursoResponseDTO>> listarCursos(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String category) {
-        var result = this.listCursosUseCase.execute(name, category);
-        if (result.isEmpty()) {
-            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(result);
 
-    }
+        @GetMapping("/cursos")
+        @PreAuthorize("hasRole('PROFESSOR')")
+        @Operation(summary = "Listar cursos", description = "Endpoint para listar cursos com filtros opcionais. Requer autenticação de professor.")
+        @SecurityRequirement(name = "jwt_auth")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", content = {
+                                        @Content(array = @ArraySchema(schema = @Schema(implementation = ProfileCursoResponseDTO.class)))
+                        }, description = "Lista de cursos retornada com sucesso (pode ser vazia se não houver cursos cadastrados)"),
+                        @ApiResponse(responseCode = "204", description = "Nenhum curso cadastrado", content = @Content),
+        })
+        public ResponseEntity<List<ProfileCursoResponseDTO>> listarCursos(
+                        @RequestParam(required = false) String name,
+                        @RequestParam(required = false) String category) {
+                var result = this.listCursosUseCase.execute(name, category);
+                if (result.isEmpty()) {
+                        return ResponseEntity.noContent().build();
+                }
+                return ResponseEntity.ok(result);
 
-    @PutMapping("/cursos/{id}")
-    @PreAuthorize("hasRole('PROFESSOR')")
-    @Operation(summary = "Atualizar curso", description = "Endpoint para atualizar um curso existente.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = UpdateCursoRequestDTO.class))
-            }, description = "Curso atualizado com sucesso"),
-            @ApiResponse(responseCode = "204", description = "No content available/registered"),
-            @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
-            @ApiResponse(responseCode = "400", description = "Nenhum dado fornecido para atualização")
-    })
-    @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> updateCurso(
-            @PathVariable UUID id,
-            @Valid @RequestBody UpdateCursoRequestDTO body) {
-        var result = this.updateCursoUseCase.updateExecute(id, body);
-        return ResponseEntity.ok().body(result);
-    }
+        }
 
-    @DeleteMapping("/cursos/{id}")
-    @PreAuthorize("hasRole('PROFESSOR')")
-    @Operation(summary = "Deletar curso", description = "Endpoint para deletar um curso existente.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Curso deletado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Curso não encontrado.")
-    })
-    @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> deleteCurso(@PathVariable UUID id) {
-        this.deleteCursoUseCase.deleteExecute(id);
-        return ResponseEntity.noContent().build();
-    }
+        @PutMapping("/cursos/{id}")
+        @PreAuthorize("hasRole('PROFESSOR')")
+        @Operation(summary = "Atualizar curso", description = "Endpoint para atualizar um curso existente.")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "200", content = {
+                                        @Content(schema = @Schema(implementation = UpdateCursoRequestDTO.class))
+                        }, description = "Curso atualizado com sucesso"),
+                        @ApiResponse(responseCode = "204", description = "No content available/registered"),
+                        @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
+                        @ApiResponse(responseCode = "400", description = "Nenhum dado fornecido para atualização")
+        })
+        @SecurityRequirement(name = "jwt_auth")
+        public ResponseEntity<Object> updateCurso(
+                        @PathVariable UUID id,
+                        @Valid @RequestBody UpdateCursoRequestDTO body) {
+                var result = this.updateCursoUseCase.updateExecute(id, body);
+                return ResponseEntity.ok().body(result);
+        }
 
-    @PatchMapping("/cursos/{id}/active")
-    @PreAuthorize("hasRole('PROFESSOR')")
-    @Operation(summary = "Ativar/Desativar curso", description = "Endpoint para ativar ou desativar um curso existente.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Curso atualizado com sucesso"),
-            @ApiResponse(responseCode = "404", description = "No content available/registered")
-    })
-    @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<Object> patchCurso(@PathVariable UUID id) {
-        this.patchCursosUseCase.patchExecute(id);
-        return ResponseEntity.noContent().build();
-    }
+        @DeleteMapping("/cursos/{id}")
+        @PreAuthorize("hasRole('PROFESSOR')")
+        @Operation(summary = "Deletar curso", description = "Endpoint para deletar um curso existente.")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "204", description = "Curso deletado com sucesso"),
+                        @ApiResponse(responseCode = "404", description = "No content available/registered")
+        })
+        @SecurityRequirement(name = "jwt_auth")
+        public ResponseEntity<Object> deleteCurso(@PathVariable UUID id) {
+                this.deleteCursoUseCase.deleteExecute(id);
+                return ResponseEntity.noContent().build();
+        }
+
+        @PatchMapping("/cursos/{id}/active")
+        @PreAuthorize("hasRole('PROFESSOR')")
+        @Operation(summary = "Ativar/Desativar curso", description = "Endpoint para ativar ou desativar um curso existente.")
+        @ApiResponses({
+                        @ApiResponse(responseCode = "204", description = "Curso atualizado com sucesso"),
+                        @ApiResponse(responseCode = "404", description = "No content available/registered")
+        })
+        @SecurityRequirement(name = "jwt_auth")
+        public ResponseEntity<Object> patchCurso(@PathVariable UUID id) {
+                this.patchCursosUseCase.patchExecute(id);
+                return ResponseEntity.noContent().build();
+        }
 
 }
