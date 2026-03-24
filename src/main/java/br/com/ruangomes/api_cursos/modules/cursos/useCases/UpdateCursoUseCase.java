@@ -3,7 +3,7 @@ package br.com.ruangomes.api_cursos.modules.cursos.useCases;
 import java.util.UUID;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import br.com.ruangomes.api_cursos.exceptions.NoContentException;
+import br.com.ruangomes.api_cursos.exceptions.NoContentFoundException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.UpdateCursoRequestDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import br.com.ruangomes.api_cursos.modules.professor.repositories.ProfessorRepository;
@@ -20,7 +20,7 @@ public class UpdateCursoUseCase {
 
         var curso = this.cursoRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new NoContentException();
+                    throw new NoContentFoundException();
                 });
 
         boolean dataUpdated = false;

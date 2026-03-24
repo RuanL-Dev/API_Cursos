@@ -25,7 +25,10 @@ public class ListCursosUseCase {
             categoryFilter = category.toLowerCase();
         }
 
-        var result = this.cursoRepository.findByFilters(nameFilter, categoryFilter);
+        var result = this.cursoRepository.findByFilters(nameFilter, categoryFilter)
+                .orElseThrow(() -> {
+                    throw new RuntimeException("Nenhum curso encontrado com os filtros fornecidos.");
+                });
 
         var cursoDTO = result.stream().map(curso -> ProfileCursoResponseDTO.builder()
                 .name(curso.getName())

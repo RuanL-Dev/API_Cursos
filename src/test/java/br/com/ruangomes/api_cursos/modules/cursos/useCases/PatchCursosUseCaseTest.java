@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import br.com.ruangomes.api_cursos.exceptions.NoContentException;
+import br.com.ruangomes.api_cursos.exceptions.NoContentFoundException;
 import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import br.com.ruangomes.api_cursos.modules.professor.entities.ProfessorEntity;
@@ -32,7 +32,7 @@ public class PatchCursosUseCaseTest {
         when(cursoRepository.findById(nonExistingCourseId)).thenReturn(Optional.empty());
 
         Assertions.assertThatThrownBy(() -> patchCursosUseCase.patchExecute(nonExistingCourseId))
-                .isInstanceOf(NoContentException.class);
+                .isInstanceOf(NoContentFoundException.class);
     }
 
     @Test
