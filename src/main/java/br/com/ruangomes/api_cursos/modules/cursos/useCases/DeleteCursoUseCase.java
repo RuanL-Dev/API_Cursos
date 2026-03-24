@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import br.com.ruangomes.api_cursos.exceptions.NoContentFoundException;
+import br.com.ruangomes.api_cursos.exceptions.NoContentException;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +17,7 @@ public class DeleteCursoUseCase {
     public void deleteExecute(UUID id) {
         var curso = this.cursoRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new NoContentFoundException();
+                    throw new NoContentException();
                 });
         this.cursoRepository.delete(curso);
     }
