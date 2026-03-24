@@ -2,7 +2,7 @@ package br.com.ruangomes.api_cursos.modules.cursos.useCases;
 
 import java.util.UUID;
 import org.springframework.stereotype.Service;
-import br.com.ruangomes.api_cursos.exceptions.NoContentException;
+import br.com.ruangomes.api_cursos.exceptions.NoContentFoundException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO.ProfileCursoResponseDTOBuilder;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
@@ -18,7 +18,7 @@ public class PatchCursosUseCase {
 
         var curso = this.cursoRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new NoContentException();
+                    throw new NoContentFoundException();
                 });
 
         Boolean currentStatus = Boolean.TRUE.equals(curso.getActive());

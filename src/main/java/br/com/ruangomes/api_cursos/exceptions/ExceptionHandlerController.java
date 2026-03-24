@@ -64,9 +64,14 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
+    @ExceptionHandler(NoContentFoundException.class)
+    public ResponseEntity<String> handleNoContentException(NoContentFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
     @ExceptionHandler(NoContentException.class)
     public ResponseEntity<String> handleNoContentException(NoContentException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
     }
 
     @ExceptionHandler(InvalidTokenException.class)
