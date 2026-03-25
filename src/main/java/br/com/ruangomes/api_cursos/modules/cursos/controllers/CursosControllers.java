@@ -125,13 +125,13 @@ public class CursosControllers {
         @PreAuthorize("hasRole('PROFESSOR')")
         @Operation(summary = "Ativar/Desativar curso", description = "Endpoint para ativar ou desativar um curso existente.")
         @ApiResponses({
-                        @ApiResponse(responseCode = "204", description = "Curso atualizado com sucesso"),
+                        @ApiResponse(responseCode = "200", description = "Curso atualizado com sucesso"),
                         @ApiResponse(responseCode = "404", description = "No content available/registered")
         })
         @SecurityRequirement(name = "jwt_auth")
         public ResponseEntity<Object> patchCurso(@PathVariable UUID id) {
-                this.patchCursosUseCase.patchExecute(id);
-                return ResponseEntity.noContent().build();
+                var result = this.patchCursosUseCase.patchExecute(id);
+                return ResponseEntity.ok().body(result);
         }
 
 }

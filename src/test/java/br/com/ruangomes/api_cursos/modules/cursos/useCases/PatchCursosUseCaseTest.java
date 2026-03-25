@@ -57,7 +57,7 @@ public class PatchCursosUseCaseTest {
 
         when(cursoRepository.save(cursoEntityTest)).thenReturn(cursoEntityTest);
 
-        var response = patchCursosUseCase.patchExecute(courseId).build();
+        var response = patchCursosUseCase.patchExecute(courseId);
 
         Assertions.assertThat(response).isNotNull();
         Assertions.assertThat(response.getActive()).isFalse();
