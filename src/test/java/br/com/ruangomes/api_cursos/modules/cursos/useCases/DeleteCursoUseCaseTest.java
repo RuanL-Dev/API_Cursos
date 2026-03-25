@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.com.ruangomes.api_cursos.exceptions.NoContentException;
 import br.com.ruangomes.api_cursos.modules.cursos.entities.CursosEntity;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 
@@ -32,8 +33,8 @@ public class DeleteCursoUseCaseTest {
         when(cursoRepository.findById(nonExistingId)).thenReturn(Optional.empty());
 
         Assertions.assertThatThrownBy(() -> deleteCursoUseCase.deleteExecute(nonExistingId))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Curso não encontrado.");
+                .isInstanceOf(NoContentException.class)
+                .hasMessage("No content available/registered");
 
     }
 
