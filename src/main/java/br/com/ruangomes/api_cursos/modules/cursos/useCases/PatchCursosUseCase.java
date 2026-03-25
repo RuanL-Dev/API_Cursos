@@ -4,7 +4,6 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import br.com.ruangomes.api_cursos.exceptions.NoContentException;
 import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO;
-import br.com.ruangomes.api_cursos.modules.cursos.dto.ProfileCursoResponseDTO.ProfileCursoResponseDTOBuilder;
 import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +13,7 @@ public class PatchCursosUseCase {
 
     private final CursoRepository cursoRepository;
 
-    public ProfileCursoResponseDTOBuilder patchExecute(UUID id) {
+    public ProfileCursoResponseDTO patchExecute(UUID id) {
 
         var curso = this.cursoRepository.findById(id)
                 .orElseThrow(() -> {
@@ -31,7 +30,8 @@ public class PatchCursosUseCase {
                 .category(pacthedCurso.getCategory())
                 .professor(pacthedCurso.getProfessor().getNomeProfessor())
                 .active(pacthedCurso.getActive())
-                .id(pacthedCurso.getId());
+                .id(pacthedCurso.getId())
+                .build();
     }
 
 }
