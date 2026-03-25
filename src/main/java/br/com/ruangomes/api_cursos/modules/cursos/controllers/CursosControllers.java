@@ -96,7 +96,7 @@ public class CursosControllers {
                         @ApiResponse(responseCode = "200", content = {
                                         @Content(schema = @Schema(implementation = UpdateCursoRequestDTO.class))
                         }, description = "Curso atualizado com sucesso"),
-                        @ApiResponse(responseCode = "204", description = "No content available/registered"),
+                        @ApiResponse(responseCode = "404", description = "No content available/registered"),
                         @ApiResponse(responseCode = "404", description = "Professor não encontrado"),
                         @ApiResponse(responseCode = "400", description = "Nenhum dado fornecido para atualização")
         })
