@@ -1,5 +1,6 @@
 package br.com.ruangomes.api_cursos.modules.professor.controllers;
 
+import br.com.ruangomes.api_cursos.modules.cursos.repositories.CursoRepository;
 import br.com.ruangomes.api_cursos.modules.professor.entities.ProfessorEntity;
 import br.com.ruangomes.api_cursos.modules.professor.repositories.ProfessorRepository;
 import br.com.ruangomes.api_cursos.utils.TestUtils;
@@ -38,9 +39,12 @@ public class CreateProfessorControllerTest {
     @Autowired
     private ProfessorRepository professorRepository;
 
+    @Autowired
+    private CursoRepository cursoRepository;
+
     @BeforeEach
     public void setup() {
-
+        cursoRepository.deleteAll();
         professorRepository.deleteAll();
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
@@ -83,7 +87,7 @@ public class CreateProfessorControllerTest {
 
     @AfterEach
     public void tearDown() {
-
+        cursoRepository.deleteAll();
         professorRepository.deleteAll();
 
     }
