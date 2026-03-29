@@ -17,25 +17,26 @@ public class SecurityConfig {
     @Autowired
     private SecurityFilter securityFilter;
 
-    private static final String[] SWAGGER_LIST = {
-        "/v3/api-docs/**",
-        "/swagger-ui.html",
-        "/swagger-ui/**",
-        "/v2/api-docs",
-        "/webjars/**",
-        "/swagger-resources/**"
+    private static final String[] PERMIT_ALL_LIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/actuator/**"
     };
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/professor/").permitAll()
-            .requestMatchers("/professor/auth").permitAll()
-            .requestMatchers(SWAGGER_LIST).permitAll();
-            auth.anyRequest().authenticated();
-            
-        }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/professor/").permitAll()
+                            .requestMatchers("/professor/auth").permitAll()
+                            .requestMatchers(PERMIT_ALL_LIST).permitAll();
+                    auth.anyRequest().authenticated();
+
+                }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
         return http.build();
     }
 
@@ -43,5 +44,5 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 }
