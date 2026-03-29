@@ -1,10 +1,43 @@
+
+networks:
+  api-cursos-network:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  postgres_data:
+  grafana_data:
+
 services:
   postgres:
-    container_name: api_cursos_postgres
-    image: postgres
+    container_name: api-cursos-postgres
+    image: postgres:18
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=api_cursos
+      - POSTGRES_DB=api-cursos
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+    - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    - prometheus_data:/prometheus
+    networks:
+      - api-cursos-network
+    ports:
+      - 9090:9090
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - api-cursos-network
