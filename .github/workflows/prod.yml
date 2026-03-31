@@ -38,4 +38,10 @@ jobs:
               run: |
                    docker stop api-cursos || true
                    docker rm -f api-cursos || true
-                   docker run -d --name api-cursos -p 8080:8080 -e DATABASE_URL=${{secrets.DATABASE_URL}} -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' ruanlgomes/api-cursos
+                   docker run -d --name api-cursos -p 8080:8080 \
+                   -e DATABASE_URL=${{secrets.DATABASE_URL}} \
+                   -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
+                   -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' \
+                   -e SECURITY_TOKEN_SECRET=${{secrets.SECURITY_TOKEN_SECRET}} \
+                   -e TOKEN_SONAR=${{secrets.TOKEN_SONAR}} \
+                   ruanlgomes/api-cursos
