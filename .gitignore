@@ -51,9 +51,6 @@ build/
 !**/src/test/**/build/
 
 ### Spring Boot configs locais ###
-application.properties
 /src/main/resources/lembretes
-src/main/resources/application.properties
-src/main/resources/application*.properties
 src/main/resources/application*.yml
 EOF
